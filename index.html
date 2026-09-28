@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="Offline tiffin service record manager">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Tiffin Ledger</title>
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>🍱 Tiffin Ledger</h1>
+    <p>Offline dinner record & payment tracker</p>
+  </div>
+  <button id="installBtn" class="secondary hidden">Install</button>
+</header>
+
+<main>
+  <section class="cards">
+    <div class="card"><span>This month</span><strong id="bill">₹0</strong><small>Food bill</small></div>
+    <div class="card"><span>Paid</span><strong id="paid">₹0</strong><small>Advance + payments</small></div>
+    <div class="card"><span>Balance</span><strong id="balance">₹0</strong><small id="balanceLabel">Remaining</small></div>
+    <div class="card"><span>Meals</span><strong id="mealCount">0</strong><small>Tiffins taken</small></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <h2>Today's dinner</h2>
+      <span id="todayDate"></span>
+    </div>
+    <div class="meal-buttons">
+      <button class="meal veg" id="vegBtn">🥗 Veg · ₹60</button>
+      <button class="meal nonveg" id="nonVegBtn">🍗 Non-veg · ₹100</button>
+      <button class="meal skip" id="skipBtn">✕ Not taken</button>
+    </div>
+    <p id="todayStatus" class="status"></p>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <h2>Payment</h2>
+      <span>₹</span>
+    </div>
+    <div class="form-grid">
+      <label>Amount<input id="paymentAmount" type="number" min="1" step="1" placeholder="e.g. 500"></label>
+      <label>Date<input id="paymentDate" type="date"></label>
+      <label class="wide">Note<input id="paymentNote" type="text" placeholder="Advance / monthly payment"></label>
+    </div>
+    <button id="addPayment" class="primary">＋ Add payment</button>
+    <div id="paymentList" class="list"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <h2>Daily history</h2>
+      <div class="month-control">
+        <button id="prevMonth">‹</button>
+        <input id="monthPicker" type="month">
+        <button id="nextMonth">›</button>
+      </div>
+    </div>
+    <div id="history" class="history"></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head">
+      <h2>Monthly summary</h2>
+      <span id="summaryMonth"></span>
+    </div>
+    <div class="summary-grid">
+      <div><span>Veg</span><b id="vegCount">0</b></div>
+      <div><span>Non-veg</span><b id="nonVegCount">0</b></div>
+      <div><span>Not taken</span><b id="skipCount">0</b></div>
+      <div><span>Total</span><b id="summaryBill">₹0</b></div>
+    </div>
+    <div class="chart-wrap"><canvas id="chart" height="220"></canvas></div>
+  </section>
+
+  <section class="panel">
+    <div class="section-head"><h2>Backup & settings</h2></div>
+    <div class="settings-grid">
+      <label>Veg price<input id="vegPrice" type="number" min="0"></label>
+      <label>Non-veg price<input id="nonVegPrice" type="number" min="0"></label>
+      <label>Default month<input id="defaultMonth" type="month"></label>
+    </div>
+    <button id="saveSettings" class="primary">Save settings</button>
+    <div class="backup-row">
+      <button id="exportBtn" class="secondary">⬇ Export backup</button>
+      <label class="file-btn secondary">⬆ Import backup<input id="importFile" type="file" accept=".json"></label>
+      <button id="resetBtn" class="danger">Reset all data</button>
+    </div>
+    <p class="hint">Data is stored locally on this phone/browser. Export a backup before changing phones or clearing browser data.</p>
+  </section>
+</main>
+
+<nav class="bottom-nav">
+  <button onclick="document.querySelector('.cards').scrollIntoView({behavior:'smooth'})">🏠<span>Home</span></button>
+  <button onclick="document.querySelector('.panel:nth-of-type(3)').scrollIntoView({behavior:'smooth'})">📅<span>History</span></button>
+  <button onclick="document.querySelector('.panel:nth-of-type(4)').scrollIntoView({behavior:'smooth'})">📊<span>Summary</span></button>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>
